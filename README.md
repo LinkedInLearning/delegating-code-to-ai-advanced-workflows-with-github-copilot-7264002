@@ -1,5 +1,5 @@
-# COURSENAME
-This is the repository for the LinkedIn Learning course `course-name`. The full course is available from [LinkedIn Learning][lil-course-url].
+# Delegating Code to AI: Advanced Workflows with GitHub Copilot
+This is the repository for the LinkedIn Learning course `Delegating Code to AI: Advanced Workflows with GitHub Copilot`. The full course is available from [LinkedIn Learning][lil-course-url].
 
 ![lil-thumbnail-url]
 
