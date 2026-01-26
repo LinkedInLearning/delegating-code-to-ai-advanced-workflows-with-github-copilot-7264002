@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light dark;
+}
+
+html:not(.dark) {
   color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 html, body {
@@ -11,9 +19,28 @@ html, body {
 }
 
 body {
-  @apply bg-zinc-950 text-zinc-50;
+  @apply bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50;
 }
 
 a {
   @apply underline-offset-4;
+}
+
+/* subtle soft shadow utility used across cards */
+.shadow-soft {
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+/* clickable card affordance */
+.card-clickable {
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+.card-clickable:hover {
+  transform: translateY(-4px);
+}
+
+/* header spacing tweaks */
+.site-header {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

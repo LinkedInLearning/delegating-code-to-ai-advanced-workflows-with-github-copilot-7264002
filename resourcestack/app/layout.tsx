@@ -9,8 +9,24 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(() => {
+  try {
+    const key = 'rs-theme';
+    const theme = localStorage.getItem(key);
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const useDark = theme === 'dark' || (theme !== 'light' && prefersDark);
+    document.documentElement.classList.toggle('dark', useDark);
+    if (theme) document.documentElement.dataset.theme = theme;
+  } catch {}
+})();`,
+          }}
+        />
+      </head>
       <body>
-        <div className="min-h-screen bg-gradient-to-b from-zinc-950 via-zinc-950 to-zinc-900">
+        <div className="min-h-screen bg-gradient-to-b from-zinc-100 via-zinc-50 to-zinc-100 text-zinc-900 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-900 dark:text-zinc-50">
           <div className="mx-auto max-w-6xl px-4 py-10">
             {children}
           </div>
