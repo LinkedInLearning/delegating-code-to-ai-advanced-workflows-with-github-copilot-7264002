@@ -24,6 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 })();`,
           }}
         />
+      <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#111827" />
+
       </head>
       <body>
         <div className="min-h-screen bg-gradient-to-b from-zinc-100 via-zinc-50 to-zinc-100 text-zinc-900 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-900 dark:text-zinc-50">
