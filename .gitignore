@@ -2,3 +2,23 @@
 node_modules
 .tmp
 npm-debug.log
+
+# Env
+.env
+
+# Next build
+.next/
+out/
+
+# Logs
+logs/
+
+# Prisma local dev artifacts
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# Lockfiles (optional)
+package-lock.json
+
+node_modules

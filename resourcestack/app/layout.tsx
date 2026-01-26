@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       </head>
       <body>
-        <div className="min-h-screen bg-gradient-to-b from-zinc-100 via-zinc-50 to-zinc-100 text-zinc-900 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-900 dark:text-zinc-50">
+        <div className="min-h-screen bg-gradient-to-b from-zinc-200 via-zinc-100 to-zinc-200 text-zinc-900 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-900 dark:text-zinc-50">
           <div className="mx-auto max-w-6xl px-4 py-10">
             {children}
           </div>

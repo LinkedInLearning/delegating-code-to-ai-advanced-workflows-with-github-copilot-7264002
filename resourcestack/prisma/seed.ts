@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const tags = ["AI", "Career", "Docs", "Tools", "Learning"];
+
   for (const name of tags) {
     await prisma.tag.upsert({
       where: { name },
@@ -14,28 +15,85 @@ async function main() {
   }
 
   const sample = [
-    { url: "https://nextjs.org/docs", title: "Next.js Docs", notes: "App Router, routing, and server rendering." },
-    { url: "https://www.prisma.io/docs", title: "Prisma Docs", notes: "Schema, migrations, queries." },
-    { url: "https://vitest.dev", title: "Vitest", notes: "Fast unit tests for JS/TS." }
+    {
+      url: "https://nextjs.org/docs",
+      title: "Next.js Docs",
+      notes: "App Router, routing, and server rendering.",
+    },
+    {
+      url: "https://www.prisma.io/docs",
+      title: "Prisma Docs",
+      notes: "Schema, migrations, queries.",
+    },
+    {
+      url: "https://vitest.dev",
+      title: "Vitest",
+      notes: "Fast unit tests for JS/TS.",
+    },
   ];
+
+  const tagMap: Record<string, string[]> = {
+    "Next.js Docs": ["Docs", "Tools"],
+    "Prisma Docs": ["Docs", "Tools"],
+    Vitest: ["Tools", "Learning"],
+  };
 
   for (const item of sample) {
     const urlNormalized = normalizeUrl(item.url);
-    await prisma.resource.upsert({
+
+    // 1) Upsert resource
+    const resource = await prisma.resource.upsert({
       where: { urlNormalized },
-      update: {},
+      update: {
+        title: item.title,
+        notes: item.notes,
+        urlOriginal: item.url,
+      },
       create: {
         urlOriginal: item.url,
         urlNormalized,
         title: item.title,
         notes: item.notes,
         activities: {
-          create: { type: "created", message: `Seeded: ${item.title}` }
-        }
-      }
+          create: {
+            type: "created",
+            message: `Seeded: ${item.title}`,
+          },
+        },
+      },
+      select: { id: true },
     });
+
+    // 2) Attach tags
+    const tagNames = tagMap[item.title] ?? [];
+
+    if (tagNames.length > 0) {
+      const tags = await prisma.tag.findMany({
+        where: { name: { in: tagNames } },
+        select: { id: true },
+      });
+
+      for (const tag of tags) {
+        await prisma.resourceTag.upsert({
+          where: {
+            resourceId_tagId: {
+              resourceId: resource.id,
+              tagId: tag.id,
+            },
+          },
+          update: {},
+          create: {
+            resourceId: resource.id,
+            tagId: tag.id,
+          },
+        });
+      }
+    }
   }
+
+  return;
 }
+
 
 main()
   .catch((e) => {

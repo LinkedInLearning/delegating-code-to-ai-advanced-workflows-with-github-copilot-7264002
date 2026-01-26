@@ -75,7 +75,7 @@ export function ResourceBoard() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[420px_1fr]">
-      <section className="rounded-3xl bg-zinc-50/80 p-5 shadow-soft ring-1 ring-black/10 dark:bg-zinc-900/60 dark:ring-white/10">
+      <section className="rounded-3xl bg-zinc-100/80 p-5 shadow-soft ring-1 ring-black/10 dark:bg-zinc-900/60 dark:ring-white/10">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold">Add a resource</h2>
           <div className="text-xs text-zinc-600 dark:text-zinc-300">Links, docs, tools</div>
@@ -88,7 +88,7 @@ export function ResourceBoard() {
               value={form.url}
               onChange={(e) => setForm((f) => ({ ...f, url: e.target.value }))}
               placeholder="https://example.com/article"
-              className="mt-1 w-full rounded-2xl bg-zinc-50 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
+              className="mt-1 w-full rounded-2xl bg-zinc-100 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
             />
           </div>
           <div>
@@ -97,7 +97,7 @@ export function ResourceBoard() {
               value={form.title}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
               placeholder="Short, clear title"
-              className="mt-1 w-full rounded-2xl bg-zinc-50 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
+              className="mt-1 w-full rounded-2xl bg-zinc-100 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
             />
           </div>
           <div>
@@ -107,7 +107,7 @@ export function ResourceBoard() {
               onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
               placeholder="Why you saved it"
               rows={3}
-              className="mt-1 w-full resize-none rounded-2xl bg-zinc-50 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
+              className="mt-1 w-full resize-none rounded-2xl bg-zinc-100 px-3 py-2 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20"
             />
           </div>
           <button
@@ -117,13 +117,13 @@ export function ResourceBoard() {
             <Plus className="h-4 w-4" /> Save resource
           </button>
           {error ? <div className="rounded-2xl bg-rose-500/10 p-3 text-sm text-rose-200 ring-1 ring-rose-400/20">{error}</div> : null}
-          <div className="rounded-2xl bg-zinc-100/60 p-3 text-xs text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/40 dark:text-zinc-300 dark:ring-white/10">
+          <div className="rounded-2xl bg-zinc-200/60 p-3 text-xs text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/40 dark:text-zinc-300 dark:ring-white/10">
             Tip: Use the star to pin favorites at the top.
           </div>
         </form>
       </section>
 
-      <section className="rounded-3xl bg-zinc-50/60 p-5 shadow-soft ring-1 ring-black/10 dark:bg-zinc-900/40 dark:ring-white/10">
+      <section className="rounded-3xl bg-zinc-100/70 p-5 shadow-soft ring-1 ring-black/10 dark:bg-zinc-900/40 dark:ring-white/10">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-base font-semibold">Your library</h2>
@@ -137,7 +137,7 @@ export function ResourceBoard() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search title, URL, notes"
-                className="w-full rounded-2xl bg-zinc-50 py-2 pl-9 pr-3 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20 sm:w-64"
+                className="w-full rounded-2xl bg-zinc-100 py-2 pl-9 pr-3 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20 sm:w-64"
               />
             </div>
 
@@ -150,7 +150,7 @@ export function ResourceBoard() {
                   setTag(v);
                   void load(v);
                 }}
-                className="w-full appearance-none rounded-2xl bg-zinc-50 py-2 pl-9 pr-8 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20 sm:w-48"
+                className="w-full appearance-none rounded-2xl bg-zinc-100 py-2 pl-9 pr-8 text-sm ring-1 ring-black/10 outline-none focus:ring-2 focus:ring-black/10 dark:bg-zinc-950/60 dark:ring-white/10 dark:focus:ring-white/20 sm:w-48"
               >
                 <option value="">All tags</option>
                 {tags.map((t) => (
@@ -164,7 +164,7 @@ export function ResourceBoard() {
 
             <button
               onClick={() => load()}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-zinc-50 px-3 py-2 text-sm ring-1 ring-black/10 hover:bg-zinc-100 dark:bg-zinc-950/60 dark:ring-white/10 dark:hover:bg-zinc-950/80"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-zinc-100 px-3 py-2 text-sm ring-1 ring-black/10 hover:bg-zinc-200 dark:bg-zinc-950/60 dark:ring-white/10 dark:hover:bg-zinc-950/80"
               title="Refresh"
             >
               <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
@@ -175,14 +175,14 @@ export function ResourceBoard() {
 
         <div className="mt-5 grid gap-3">
           {loading && items.length === 0 ? (
-            <div className="rounded-3xl bg-zinc-50/60 p-10 text-center text-sm text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/30 dark:text-zinc-300 dark:ring-white/10">
+            <div className="rounded-3xl bg-zinc-100/70 p-10 text-center text-sm text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/30 dark:text-zinc-300 dark:ring-white/10">
               Loading resources...
             </div>
           ) : (
             filtered.map((r) => (
               <div
                 key={r.id}
-                className="group card-clickable rounded-3xl bg-zinc-50/80 p-4 ring-1 ring-black/10 hover:bg-zinc-50 dark:bg-zinc-950/40 dark:ring-white/10 dark:hover:bg-zinc-950/50"
+                className="group card-clickable rounded-3xl bg-zinc-100/80 p-4 ring-1 ring-black/10 hover:bg-zinc-100 dark:bg-zinc-950/40 dark:ring-white/10 dark:hover:bg-zinc-950/50"
               >
                 <div className="flex items-start justify-between gap-3">
                   <Link href={`/resources/${r.id}`} className="min-w-0 no-underline">
@@ -231,7 +231,7 @@ export function ResourceBoard() {
 
                   <button
                     onClick={() => toggleFavorite(r.id, r.isFavorite)}
-                    className="grid h-10 w-10 place-items-center rounded-2xl bg-zinc-100/70 ring-1 ring-black/10 hover:bg-zinc-200/70 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-white/10"
+                    className="grid h-10 w-10 place-items-center rounded-2xl bg-zinc-200/50 ring-1 ring-black/10 hover:bg-zinc-200/80 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-white/10"
                     title={r.isFavorite ? "Unfavorite" : "Favorite"}
                   >
                     <Star className={`h-4 w-4 ${r.isFavorite ? "fill-yellow-300 text-yellow-300" : "text-zinc-700 dark:text-zinc-200"}`} />
@@ -242,7 +242,7 @@ export function ResourceBoard() {
           )}
 
           {filtered.length === 0 ? (
-            <div className="rounded-3xl bg-zinc-50/60 p-10 text-center text-sm text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/30 dark:text-zinc-300 dark:ring-white/10">
+            <div className="rounded-3xl bg-zinc-100/70 p-10 text-center text-sm text-zinc-600 ring-1 ring-black/10 dark:bg-zinc-950/30 dark:text-zinc-300 dark:ring-white/10">
               No resources yet. Add your first link on the left.
             </div>
           ) : null}
