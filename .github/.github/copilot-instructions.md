@@ -8,6 +8,7 @@ General rules:
 - Use only documented npm scripts (gp:*).
 - Keep changes scoped to the request.
 - If a request conflicts with these instructions, stop and ask for clarification before making changes.
+- Do not add service workers or offline caching unless explicitly requested.
 
 
 UI behavior rules:
