@@ -17,6 +17,10 @@ logs/
 prisma/dev.db
 prisma/dev.db-journal
 prisma/migrations/
+resourcestack/prisma/dev.db
+resourcestack/prisma/dev.db-journal
+**/prisma/dev.db
+**/prisma/dev.db-journal
 
 # Lockfiles (optional)
 package-lock.json
