@@ -15,9 +15,9 @@ export async function GET(req: Request) {
   const where: any = {};
   if (search.trim()) {
     where.OR = [
-      { title: { contains: search, mode: "insensitive" } },
-      { urlOriginal: { contains: search, mode: "insensitive" } },
-      { notes: { contains: search, mode: "insensitive" } },
+      { title: { contains: search } },
+      { urlOriginal: { contains: search } },
+      { notes: { contains: search } },
     ];
   }
   if (tag.trim()) {
@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
   const resources = await prisma.resource.findMany({
     where,
-    orderBy: [{ isFavorite: "desc" }, { updatedAt: "desc" }],
+    orderBy: [{ title: "asc" }],
     include: {
       tags: { include: { tag: true } },
     },

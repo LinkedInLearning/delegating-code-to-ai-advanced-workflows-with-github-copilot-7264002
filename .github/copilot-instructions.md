@@ -1,4 +1,4 @@
-# Persistent Copilot Instructions
+<!-- # Persistent Copilot Instructions
 
 These instructions apply to all Copilot Agent Mode tasks in this repository.
 
@@ -18,4 +18,7 @@ UI behavior rules:
 
 Quality rules:
 - Do not delete tests to make builds pass.
-- Explain tradeoffs when unsure before making changes.
+- Explain tradeoffs when unsure before making changes. -->
+
+
+

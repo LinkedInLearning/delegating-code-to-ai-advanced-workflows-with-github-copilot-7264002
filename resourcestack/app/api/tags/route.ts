@@ -10,7 +10,7 @@ export async function GET() {
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   try {
-    const name = requireNonEmptyString(body.name, "name").toLowerCase();
+    const name = requireNonEmptyString(body.name, "name");
     const tag = await prisma.tag.upsert({ where: { name }, update: {}, create: { name } });
     return NextResponse.json({ tag: tag.name });
   } catch (e: any) {

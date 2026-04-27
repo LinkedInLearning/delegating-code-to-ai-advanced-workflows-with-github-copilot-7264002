@@ -28,9 +28,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" content="#111827" />
 
       </head>
-      <body>
-        <div className="min-h-screen bg-gradient-to-b from-zinc-200 via-zinc-100 to-zinc-200 text-zinc-900 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-900 dark:text-zinc-50">
-          <div className="mx-auto max-w-6xl px-4 py-10">
+      <body className="antialiased">
+        <div className="relative min-h-screen">
+          {/* Decorative gradient backgrounds */}
+          <div className="pointer-events-none fixed inset-0 -z-10">
+            <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400 to-violet-400 opacity-10 blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-gradient-to-l from-violet-400 to-pink-400 opacity-10 blur-3xl"></div>
+          </div>
+          
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
             {children}
           </div>
         </div>
