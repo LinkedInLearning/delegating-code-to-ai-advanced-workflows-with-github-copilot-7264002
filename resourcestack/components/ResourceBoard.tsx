@@ -26,6 +26,7 @@ export function ResourceBoard() {
   const [form, setForm] = useState({ url: "", title: "", notes: "", tags: "" });
   const [error, setError] = useState<string | null>(null);
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
+  const [metadataFailed, setMetadataFailed] = useState(false);
 
   async function load(overrideTag?: string, overrideSearch?: string) {
     setLoading(true);
@@ -48,8 +49,12 @@ export function ResourceBoard() {
 
   // Auto-fetch metadata when URL changes
   useEffect(() => {
-    if (!form.url.match(/^https?:\/\/.+/)) return;
+    if (!form.url.match(/^https?:\/\/.+/)) {
+      setMetadataFailed(false);
+      return;
+    }
     
+    setMetadataFailed(false);
     const timeoutId = setTimeout(() => {
       void fetchMetadata(form.url);
     }, 800);
@@ -118,10 +123,14 @@ export function ResourceBoard() {
     setError(null);
     
     try {
+      // Try server-side fetch first
       const data = await apiFetch<{ title: string; description: string }>(`/api/metadata`, {
         method: "POST",
         body: JSON.stringify({ url }),
       });
+      
+      // Check if we got meaningful data (not just hostname fallback)
+      const hasMetadata = data.title && data.title !== new URL(url).hostname;
       
       // Only update if fields are empty
       setForm((prev) => ({
@@ -129,11 +138,65 @@ export function ResourceBoard() {
         title: prev.title || data.title,
         notes: prev.notes || data.description,
       }));
+      
+      // If server-side failed, try client-side as fallback
+      if (!hasMetadata) {
+        const clientSuccess = await fetchMetadataClientSide(url);
+        setMetadataFailed(!clientSuccess);
+      } else {
+        setMetadataFailed(false);
+      }
     } catch (e: any) {
-      // Silently fail - user can still enter manually
-      console.error("Metadata fetch failed:", e);
+      // Try client-side as fallback
+      console.error("Server-side metadata fetch failed:", e);
+      const clientSuccess = await fetchMetadataClientSide(url);
+      setMetadataFailed(!clientSuccess);
     } finally {
       setFetchingMetadata(false);
+    }
+  }
+
+  async function fetchMetadataClientSide(url: string): Promise<boolean> {
+    try {
+      // Try to fetch directly from client (may be blocked by CORS)
+      const response = await fetch(url, { 
+        mode: 'cors',
+        credentials: 'omit',
+      });
+      
+      if (!response.ok) return false;
+      
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      // Extract metadata using DOM
+      const title = 
+        doc.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="twitter:title"]')?.getAttribute('content') ||
+        doc.querySelector('title')?.textContent ||
+        '';
+      
+      const description = 
+        doc.querySelector('meta[property="og:description"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="twitter:description"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="description"]')?.getAttribute('content') ||
+        '';
+      
+      // Only update if we got data and fields are still empty
+      if (title) {
+        setForm((prev) => ({
+          ...prev,
+          title: prev.title || title.trim(),
+          notes: prev.notes || description.trim(),
+        }));
+        return true;
+      }
+      return false;
+    } catch (e) {
+      // CORS or other error - silently fail, user can enter manually
+      console.log("Client-side fetch blocked (CORS):", e);
+      return false;
     }
   }
 
@@ -165,6 +228,11 @@ export function ResourceBoard() {
               placeholder="https://example.com/article"
               className="input-focus mt-1.5 w-full rounded-2xl bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200 transition-all placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:ring-blue-500/40 dark:bg-zinc-900/60 dark:ring-zinc-700 dark:placeholder:text-zinc-500 dark:focus:bg-zinc-900 dark:focus:ring-blue-500/40"
             />
+            {metadataFailed && (
+              <div className="mt-2 animate-fade-in rounded-xl bg-amber-50 p-2.5 text-xs text-amber-800 ring-1 ring-amber-200/50 dark:bg-amber-950/30 dark:text-amber-200 dark:ring-amber-900/30">
+                ⚠️ Couldn't auto-fetch metadata (site may block automated requests). Please enter title manually.
+              </div>
+            )}
           </div>
           <div>
             <label className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Title</label>

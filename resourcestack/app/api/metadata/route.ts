@@ -8,28 +8,60 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
 
-    // Fetch the page
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; ResourceStack/1.0)',
-      },
-      signal: AbortSignal.timeout(5000), // 5 second timeout
-    });
-
-    if (!response.ok) {
-      return NextResponse.json({ error: "Failed to fetch URL" }, { status: 400 });
+    // Validate URL format
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(url);
+    } catch {
+      return NextResponse.json({ error: "Invalid URL format" }, { status: 400 });
     }
 
-    const html = await response.text();
+    // Create abort controller for timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
 
-    // Extract metadata
-    const title = extractTitle(html);
-    const description = extractDescription(html);
+    try {
+      // Fetch the page
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+        },
+        signal: controller.signal,
+        redirect: 'follow',
+      });
 
-    return NextResponse.json({
-      title: title || new URL(url).hostname,
-      description: description || "",
-    });
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+        // Return fallback data instead of erroring
+        return NextResponse.json({
+          title: parsedUrl.hostname,
+          description: "",
+        });
+      }
+
+      const html = await response.text();
+
+      // Extract metadata
+      const title = extractTitle(html);
+      const description = extractDescription(html);
+
+      return NextResponse.json({
+        title: title || parsedUrl.hostname,
+        description: description || "",
+      });
+    } catch (fetchError: any) {
+      clearTimeout(timeoutId);
+      console.error("Fetch error:", fetchError.message);
+      // Return fallback data on network errors
+      return NextResponse.json({
+        title: parsedUrl.hostname,
+        description: "",
+      });
+    }
   } catch (error: any) {
     console.error("Metadata fetch error:", error);
     return NextResponse.json(
