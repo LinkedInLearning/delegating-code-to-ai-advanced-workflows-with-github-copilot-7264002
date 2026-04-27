@@ -1,4 +1,3 @@
-#UPDATE 
 # Delegating Code to AI: Advanced Workflows with GitHub Copilot
 This is the repository for the LinkedIn Learning course `Delegating Code to AI: Advanced Workflows with GitHub Copilot`. The full course is available from [LinkedIn Learning][lil-course-url].
 
