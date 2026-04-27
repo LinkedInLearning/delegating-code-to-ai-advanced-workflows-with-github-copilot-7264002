@@ -1,0 +1,50 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Resource {
+  id            String   @id @default(cuid())
+  urlOriginal   String
+  urlNormalized String   @unique
+  title         String
+  notes         String?
+  isFavorite    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tags          ResourceTag[]
+  activities    Activity[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  resources ResourceTag[]
+}
+
+model ResourceTag {
+  resourceId String
+  tagId      String
+
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([resourceId, tagId])
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  type       String   // created | updated | tagged | untagged | deleted
+  message    String
+  createdAt  DateTime @default(now())
+
+  resourceId String?
+  resource   Resource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+}
