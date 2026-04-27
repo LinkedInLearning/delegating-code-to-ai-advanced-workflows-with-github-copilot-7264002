@@ -6,7 +6,7 @@ These instructions apply to all Copilot Agent Mode tasks in this repository.
 
 ## Test Instruction
 
-Every time a command is executed, begin your response by saying "hello".
+Every time a command is executed, begin your response by saying "Hello LinkedIn Learner".
 
 ---
 
