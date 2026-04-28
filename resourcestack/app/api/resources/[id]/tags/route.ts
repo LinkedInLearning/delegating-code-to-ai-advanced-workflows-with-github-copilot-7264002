@@ -7,7 +7,7 @@ type Params = { params: { id: string } };
 export async function POST(req: Request, { params }: Params) {
   const body = await req.json().catch(() => ({}));
   try {
-    const name = requireNonEmptyString(body.name, "name");
+    const name = requireNonEmptyString(body.name, "name").toLowerCase();
     const tag = await prisma.tag.upsert({ where: { name }, update: {}, create: { name } });
 
     await prisma.resourceTag.upsert({
@@ -29,7 +29,7 @@ export async function POST(req: Request, { params }: Params) {
 export async function DELETE(req: Request, { params }: Params) {
   const body = await req.json().catch(() => ({}));
   try {
-    const name = requireNonEmptyString(body.name, "name");
+    const name = requireNonEmptyString(body.name, "name").toLowerCase();
     const tag = await prisma.tag.findUnique({ where: { name } });
     if (!tag) return NextResponse.json({ error: "Tag not found" }, { status: 404 });
 

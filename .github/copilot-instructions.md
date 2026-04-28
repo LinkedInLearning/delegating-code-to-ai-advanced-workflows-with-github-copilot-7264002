@@ -35,7 +35,8 @@ Every time a command is executed, begin your response by saying "Hello, LinkedIn
 - Do not modify `package.json` without approval.
 - Use existing project utilities and patterns whenever possible.
 - Prefer built-in framework features over adding third-party libraries.
-
+- Do not install new dependencies automatically.
+- When planning, if a task requires a new dependency or library, pause and ask the user "Are you ok with installing a new dependency?" before proceeding.
 ---
 
 ## 4. Environment & Execution Rules

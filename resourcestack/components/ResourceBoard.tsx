@@ -79,7 +79,7 @@ export function ResourceBoard() {
       
       // Add tags if provided
       if (form.tags.trim()) {
-        const tagNames = form.tags.split(',').map(t => t.trim()).filter(Boolean);
+        const tagNames = form.tags.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
         for (const tagName of tagNames) {
           try {
             // Create tag if it doesn't exist
@@ -268,7 +268,7 @@ export function ResourceBoard() {
               ))}
             </datalist>
             <div className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-              Separate multiple tags with commas. Case-sensitive!
+              Separate multiple tags with commas. Tags are saved in lowercase.
             </div>
           </div>
           <button
