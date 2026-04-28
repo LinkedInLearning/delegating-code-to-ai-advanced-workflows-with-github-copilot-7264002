@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import { Plus, Tag, Star, ExternalLink, RefreshCw, Bookmark } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Resource = {
   id: string;
@@ -17,6 +17,7 @@ type Resource = {
 };
 
 export function ResourceBoard() {
+  const router = useRouter();
   const [items, setItems] = useState<Resource[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState("");
@@ -404,7 +405,13 @@ export function ResourceBoard() {
                 style={{ animationDelay: `${idx * 30}ms` }}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <Link href={`/resources/${r.id}`} className="min-w-0 flex-1 no-underline">
+                  <div
+                    role="link"
+                    tabIndex={0}
+                    onClick={() => router.push(`/resources/${r.id}`)}
+                    onKeyDown={(e) => e.key === "Enter" && router.push(`/resources/${r.id}`)}
+                    className="min-w-0 flex-1 cursor-pointer no-underline outline-none"
+                  >
                     <div>
                       <div className="truncate text-base font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
                         {r.title}
@@ -453,7 +460,7 @@ export function ResourceBoard() {
                         <span className="transition-transform group-hover:translate-x-0.5">→</span>
                       </div>
                     </div>
-                  </Link>
+                  </div>
 
                   <button
                     onClick={() => toggleFavorite(r.id, r.isFavorite)}
