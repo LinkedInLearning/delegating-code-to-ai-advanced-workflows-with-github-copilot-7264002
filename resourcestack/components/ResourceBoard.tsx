@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { apiFetch } from "@/lib/api";
-import { Plus, Search, Tag, Star, ExternalLink, RefreshCw, Bookmark } from "lucide-react";
+import { Plus, Tag, Star, ExternalLink, RefreshCw, Bookmark } from "lucide-react";
 import Link from "next/link";
 
 type Resource = {
@@ -19,7 +19,6 @@ type Resource = {
 export function ResourceBoard() {
   const [items, setItems] = useState<Resource[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [search, setSearch] = useState("");
   const [tag, setTag] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -28,13 +27,12 @@ export function ResourceBoard() {
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [metadataFailed, setMetadataFailed] = useState(false);
 
-  async function load(overrideTag?: string, overrideSearch?: string) {
+  async function load(overrideTag?: string) {
     setLoading(true);
     setError(null);
     try {
       const qTag = overrideTag !== undefined ? overrideTag : tag;
-      const qSearch = overrideSearch !== undefined ? overrideSearch : search;
-      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=${encodeURIComponent(qSearch)}&tag=${encodeURIComponent(qTag)}`);
+      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=&tag=${encodeURIComponent(qTag)}`);
       setItems(data.resources);
       const t = await apiFetch<{ tags: string[] }>(`/api/tags`);
       setTags(t.tags);
@@ -98,7 +96,9 @@ export function ResourceBoard() {
       }
       
       setForm({ url: "", title: "", notes: "", tags: "" });
-      await load();
+      setTag("");
+      setShowFavoritesOnly(false);
+      await load("");
     } catch (e: any) {
       setError(e?.message ?? "Create failed");
     }
@@ -340,16 +340,6 @@ export function ResourceBoard() {
           
           <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-3.5 top-2.5 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search title, URL, notes..."
-                className="input-focus w-full rounded-2xl bg-zinc-50 py-2.5 pl-10 pr-4 text-sm ring-1 ring-zinc-200 transition-all placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:ring-blue-500/40 dark:bg-zinc-900/60 dark:ring-zinc-700 dark:placeholder:text-zinc-500 dark:focus:bg-zinc-900 dark:focus:ring-blue-500/40 sm:w-64"
-              />
-            </div>
-
-            <div className="relative">
               <Tag className="pointer-events-none absolute left-3.5 top-2.5 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
               <select
                 value={tag}
@@ -483,10 +473,9 @@ export function ResourceBoard() {
               </div>
               <button
                 onClick={() => {
-                  setSearch("");
                   setTag("");
                   setShowFavoritesOnly(false);
-                  void load("", "");
+                  void load("");
                 }}
                 className="btn-press mt-4 inline-flex items-center gap-2 rounded-2xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
               >
