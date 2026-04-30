@@ -19,8 +19,9 @@ When given an issue:
 5. Do not log sensitive data such as tokens, passwords, or personal information.
 6. Do not modify Prisma schema.
 7. Do not install dependencies.
-8. Identify the likely root cause before suggesting a fix.
-9. Include verification steps before accepting the fix.
+8. Ensure log files are created at the root of the project, not in subdirectories.
+9. Identify the likely root cause before suggesting a fix.
+10. Include verification steps before accepting the fix.
 
 Always structure your response as:
 
