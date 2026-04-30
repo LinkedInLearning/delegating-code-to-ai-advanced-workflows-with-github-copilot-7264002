@@ -69,6 +69,8 @@ Every time a command is executed, begin your response by saying "Hello, LinkedIn
 - Do not bypass validation logic.
 - Do not modify authentication or data access patterns unless instructed.
 - Do not weaken type safety to silence errors.
+- Do not log sensitive data such as tokens, passwords, or personal information.
+- Do not log full request bodies.
 
 ---
 
