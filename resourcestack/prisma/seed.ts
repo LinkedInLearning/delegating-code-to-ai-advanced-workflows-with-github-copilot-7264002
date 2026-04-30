@@ -4,7 +4,7 @@ import { normalizeUrl } from "../lib/normalizeUrl";
 const prisma = new PrismaClient();
 
 async function main() {
-  const tags = ["ai", "career", "docs", "tools", "learning"];
+  const tags = ["Ai", "Career", "Docs", "Tools", "Learning"];
 
   for (const name of tags) {
     await prisma.tag.upsert({
@@ -33,9 +33,9 @@ async function main() {
   ];
 
   const tagMap: Record<string, string[]> = {
-    "Next.js Docs": ["docs", "tools"],
-    "Prisma Docs": ["docs", "tools"],
-    Vitest: ["tools", "learning"],
+    "Next.js Docs": ["Docs", "Tools"],
+    "Prisma Docs": ["Docs", "Tools"],
+    Vitest: ["Tools", "Learning"],
   };
 
   for (const item of sample) {

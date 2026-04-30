@@ -1,5 +1,3 @@
-### 4-2 log-debugger.agent.md
-
 ---
 name: log-debugger
 description: Use this agent to debug issues using logs, reproduction steps, evidence, and verification.
@@ -32,12 +30,3 @@ Suggested logs:
 Likely cause:
 Minimal fix:
 Verification:
-
-### 4-2 Issue
-Filtering is not working as expected. Tags like “Tools” and “tools” are being treated as separate values.
-
-### 4-3 Add Logging
-Add the suggested logging to show input, output, and comparison for the filter logic.
-
-### 4-3 Update Filter Logic
-Update the filter logic to ensure tag comparison is case-insensitive.
