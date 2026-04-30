@@ -46,6 +46,19 @@ Every time a command is executed, begin your response by saying "Hello, LinkedIn
 - Do not assume external services or infrastructure that are not present in this repository.
 - Do not add service workers or offline caching unless explicitly requested.
 - Do not modify environment configuration files unless explicitly instructed.
+- Strictly use the Golden Path scripts for all project operations.
+- Prefer scripts prefixed with `gp:` for setup, development, testing, linting, and reproduction.
+- Do not invent setup, test, lint, or reproduction commands.
+- If a required command is missing, ask for clarification.
+
+### Additional Reliability Rules
+
+- Always use `gp:`-prefixed scripts for setup, development, testing, linting, and reproducibility. Do not use or invent alternative scripts unless explicitly instructed.
+- When adding new npm scripts, prefix with `gp:` and document their purpose in the README.
+- Document all required environment variables in `.env.example` and validate their presence at startup if possible.
+- If CI/CD or workflow automation is added, document the workflow and required commands in the README.
+- Do not guess or invent commands. If a required command is missing, pause and ask for clarification.
+- Ensure all instructions and scripts are kept in sync between `package.json` and the README.
 
 ---
 
