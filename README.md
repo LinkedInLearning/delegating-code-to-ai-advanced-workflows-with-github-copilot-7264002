@@ -5,40 +5,148 @@ This is the repository for the LinkedIn Learning course `Delegating Code to AI: 
 
 ## Course Description
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+Learn how to delegate complex coding tasks to GitHub Copilot using advanced agent workflows and customization techniques. This course teaches you how to effectively guide AI assistants through multi-step tasks, set boundaries with custom instructions, and leverage agent modes for better code generation results.
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+The course uses **ResourceStack**, a modern Next.js resource organizer application, as a hands-on learning environment where you'll practice:
+- Creating and refining custom Copilot instructions
+- Managing dependencies and scope with agent guardrails
+- Debugging and fixing issues with AI assistance
+- Implementing features through effective task delegation
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+## Prerequisites
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+To follow along with this course, you should have:
+- Basic understanding of JavaScript/TypeScript
+- Familiarity with GitHub Copilot
+- Node.js 18+ installed
+- Git for version control
+- A code editor (VS Code recommended with GitHub Copilot extension)
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+## Quick Start
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+### Running the ResourceStack Application
 
-## Instructor
+1. Navigate to the project directory:
+   ```bash
+   cd resourcestack
+   ```
 
-Instructor name
+2. Copy the environment file:
+   ```bash
+   cp .env.example .env
+   ```
 
-Instructor description
+3. Run the setup script (installs dependencies, generates Prisma client, runs migrations, seeds database):
+   ```bash
+   npm run gp:setup
+   ```
 
-                            
+4. Start the development server:
+   ```bash
+   npm run gp:dev
+   ```
 
-Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/).
+5. Open your browser to [http://localhost:3000](http://localhost:3000)
+
+### Additional Commands
+
+- **Run tests**: `npm run gp:test`
+- **Lint code**: `npm run gp:lint`
+- **Reproduce bug** (for debugging exercises): `npm run gp:repro`
+- **View logs**: Check `./logs/app.log`
+
+## Repository Structure
+
+```
+.
+├── resourcestack/          # Main Next.js application
+│   ├── app/               # Next.js app router (pages & API routes)
+│   ├── components/        # React components
+│   ├── lib/               # Utility functions and database setup
+│   ├── prisma/            # Database schema and migrations
+│   ├── tests/             # Test files
+│   └── scripts/           # Helper scripts
+├── chapter1/              # Chapter 1 exercises and prompts
+└── chapter2/              # Chapter 2 exercises and prompts
+```
+
+## Course Chapters
+
+Each branch in this repository corresponds to a chapter in the course:
+
+- **Chapter 1**: Agent Customization Fundamentals
+  - Setting up custom instructions
+  - Managing dependencies with guardrails
+  - Defining project scope
+  - Working with agent stop conditions
+
+- **Chapter 2**: Advanced Task Delegation
+  - Improving task instructions
+  - Implementing scope checkpoints
+  - Verification strategies
+  - Multi-step workflows
+
+## Working with Branches
+
+The branches are structured to correspond to the chapters in the course. Each branch contains:
+- Exercise files
+- Custom instruction examples
+- Prompts for practice
+
+To switch branches:
+```bash
+git checkout chapter1
+```
+
+Or use the branch menu in GitHub to browse different chapters.
+
+### Handling Local Changes
+
+If you've made changes and want to switch branches, you may see an error. To resolve:
+
+```bash
+git add .
+git commit -m "Your commit message"
+git checkout <branch-name>
+```
+
+Alternatively, stash your changes:
+```bash
+git stash
+git checkout <branch-name>
+git stash pop  # To restore your changes later
+```
+
+## About ResourceStack
+
+ResourceStack is a full-stack web application built with:
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Prisma** - Database ORM
+- **Tailwind CSS** - Styling
+- **SQLite** - Database (via Prisma)
+- **Vitest** - Testing framework
+
+The application intentionally includes a URL normalization bug for debugging exercises in the course.
+
+## Troubleshooting
+
+**Database issues**: Try resetting the database:
+```bash
+cd resourcestack
+npx prisma migrate reset
+```
+
+**Dependency issues**: Clear node_modules and reinstall:
+```bash
+rm -rf node_modules package-lock.json
+npm install --legacy-peer-deps
+```
+
+**Port already in use**: Kill the process on port 3000 or use a different port:
+```bash
+npm run gp:dev -- -p 3001
+```
 
 
 [0]: # (Replace these placeholder URLs with actual course URLs)
