@@ -7,19 +7,119 @@ This is the repository for the LinkedIn Learning course `Delegating Code to AI: 
 
 Learn how to delegate complex coding tasks to GitHub Copilot using advanced agent workflows and customization techniques. This course teaches you how to effectively guide AI assistants through multi-step tasks, set boundaries with custom instructions, and leverage agent modes for better code generation results.
 
-The course uses **ResourceStack**, a modern Next.js resource organizer application, as a hands-on learning environment where you'll practice:
-- Creating and refining custom Copilot instructions
-- Managing dependencies and scope with agent guardrails
-- Debugging and fixing issues with AI assistance
-- Implementing features through effective task delegation
+## This Branch — Chapter 2
 
-## What's in the Main Branch
+This branch is the starting point for **Chapter 2: Advanced Task Delegation**.
 
-The `main` branch contains the **complete, final state** of the ResourceStack application with:
-- All features fully implemented
-- Custom Copilot instructions configured
-- Example prompts and exercises from all chapters
-- Full documentation and setup instructions
+The ResourceStack app is functional with working tag filtering. Your exercise is to use GitHub Copilot Agent Mode to implement a **visible active filter badge** that appears when a tag filter is active, showing which tag is selected and providing a way to clear it.
+
+**What's missing (for you to build):**
+- A visible active filter badge that appears when a tag is selected
+- A clear button to dismiss the active filter
+
+## Prerequisites
+
+To follow along with this course, you should have:
+- Basic understanding of JavaScript/TypeScript
+- Familiarity with GitHub Copilot
+- **Node.js 18+** installed
+- Git for version control
+- A code editor (VS Code recommended with GitHub Copilot extension)
+
+## Quick Start
+
+### Running the ResourceStack Application
+
+**⚠️ IMPORTANT**: You must create a `.env` file before running setup!
+
+1. Navigate to the resourcestack directory:
+   ```bash
+   cd resourcestack
+   ```
+
+2. **Create the environment file** (REQUIRED):
+   ```bash
+   cp .env.example .env
+   ```
+   
+   This creates a `.env` file with `DATABASE_URL="file:./dev.db"` which Prisma needs to connect to the SQLite database.
+
+3. Run the setup script (installs dependencies, generates Prisma client, runs migrations, seeds database):
+   ```bash
+   npm run gp:setup
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run gp:dev
+   ```
+
+5. Open your browser to [http://localhost:3000](http://localhost:3000)
+
+### Additional Commands
+
+- **Run tests**: `npm run gp:test`
+- **Lint code**: `npm run gp:lint`
+- **View logs**: Check `./logs/app.log`
+
+## Switching Branches
+
+To switch to another chapter:
+
+```bash
+git fetch origin
+git switch chapter1
+```
+
+### Handling Local Changes
+
+**Option 1 - Commit your changes:**
+```bash
+git add .
+git commit -m "Your commit message"
+git switch <branch-name>
+```
+
+**Option 2 - Stash your changes:**
+```bash
+git stash
+git switch <branch-name>
+git stash pop
+```
+
+## About ResourceStack
+
+ResourceStack is a full-stack web application built with:
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Prisma** - Database ORM with SQLite
+- **Tailwind CSS** - Styling
+- **Vitest** - Testing framework
+
+## Troubleshooting
+
+**Missing DATABASE_URL error**: Make sure you created the `.env` file:
+```bash
+cd resourcestack
+cp .env.example .env
+```
+
+**Database issues**: Try resetting the database:
+```bash
+cd resourcestack
+npx prisma migrate reset --force
+```
+
+**Dependency issues**: Clear node_modules and reinstall:
+```bash
+rm -rf node_modules package-lock.json
+npm install --legacy-peer-deps
+```
+
+**Port already in use**:
+```bash
+npm run gp:dev -- -p 3001
+```
 
 ## Prerequisites
 

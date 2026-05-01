@@ -372,25 +372,6 @@ export function ResourceBoard() {
           </div>
         </div>
 
-        {/* Active Filter Badge */}
-        {tag && (
-          <div className="mt-4 flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Active filter:</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-xs font-bold text-white shadow-md">
-              <Tag className="h-3 w-3" />
-              {tag}
-              <button
-                type="button"
-                aria-label="Clear filter"
-                onClick={() => { setTag(""); void load(""); }}
-                className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-white/20 transition-colors hover:bg-white/40"
-              >
-                ×
-              </button>
-            </span>
-          </div>
-        )}
-
         <div className="mt-6 grid gap-3.5">
           {loading && items.length === 0 ? (
             <div className="animate-fade-in rounded-3xl bg-zinc-50/70 p-12 text-center ring-1 ring-zinc-200/50 dark:bg-zinc-900/30 dark:ring-zinc-700/50">
