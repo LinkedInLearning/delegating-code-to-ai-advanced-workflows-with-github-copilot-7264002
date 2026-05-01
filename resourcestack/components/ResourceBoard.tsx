@@ -385,56 +385,59 @@ export function ResourceBoard() {
                 style={{ animationDelay: `${idx * 30}ms` }}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <Link href={`/resources/${r.id}`} className="min-w-0 flex-1 no-underline">
-                    <div>
-                      <div className="truncate text-base font-bold text-zinc-900 transition-colors group-hover:text-blue-600 dark:text-zinc-50 dark:group-hover:text-blue-400">
-                        {r.title}
+                  <div className="min-w-0 flex-1">
+                    <Link 
+                      href={`/resources/${r.id}`} 
+                      className="truncate text-base font-bold text-zinc-900 transition-colors hover:text-blue-600 dark:text-zinc-50 dark:hover:text-blue-400 no-underline"
+                    >
+                      {r.title}
+                    </Link>
+                    <a
+                      href={r.urlOriginal}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-1.5 inline-flex max-w-full items-center gap-2 truncate text-xs font-medium text-zinc-500 transition-colors hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span className="truncate">{r.urlOriginal}</span>
+                    </a>
+                    {r.notes ? (
+                      <div className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+                        {r.notes}
                       </div>
-                      <a
-                        href={r.urlOriginal}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-1.5 inline-flex max-w-full items-center gap-2 truncate text-xs font-medium text-zinc-500 transition-colors hover:text-blue-600 dark:text-zinc-400 dark:hover:text-blue-400"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
-                        <span className="truncate">{r.urlOriginal}</span>
-                      </a>
-                      {r.notes ? (
-                        <div className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
-                          {r.notes}
-                        </div>
-                      ) : null}
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {r.tags.map((t) => (
-                          <button
-                            key={t}
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              const next = tag === t ? "" : t;
-                              setTag(next);
-                              void load(next);
-                            }}
-                            className={
-                              tag === t
-                                ? "btn-press cursor-pointer rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition-all hover:shadow-lg"
-                                : "btn-press cursor-pointer rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-zinc-200 transition-all hover:bg-zinc-200 hover:ring-zinc-300 dark:bg-zinc-800/60 dark:text-zinc-300 dark:ring-zinc-700 dark:hover:bg-zinc-800 dark:hover:ring-zinc-600"
-                            }
-                            aria-label={`Filter by ${t}`}
-                          >
-                            {t}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="mt-4 flex items-center justify-start gap-1.5 text-xs font-medium text-zinc-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-zinc-400">
-                        <span>View details</span>
-                        <span className="transition-transform group-hover:translate-x-0.5">→</span>
-                      </div>
+                    ) : null}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {r.tags.map((t) => (
+                        <button
+                          key={t}
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const next = tag === t ? "" : t;
+                            setTag(next);
+                            void load(next);
+                          }}
+                          className={
+                            tag === t
+                              ? "btn-press cursor-pointer rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1.5 text-xs font-bold text-white shadow-md transition-all hover:shadow-lg"
+                              : "btn-press cursor-pointer rounded-full bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 ring-1 ring-zinc-200 transition-all hover:bg-zinc-200 hover:ring-zinc-300 dark:bg-zinc-800/60 dark:text-zinc-300 dark:ring-zinc-700 dark:hover:bg-zinc-800 dark:hover:ring-zinc-600"
+                          }
+                          aria-label={`Filter by ${t}`}
+                        >
+                          {t}
+                        </button>
+                      ))}
                     </div>
-                  </Link>
+
+                    <Link 
+                      href={`/resources/${r.id}`}
+                      className="mt-4 flex items-center justify-start gap-1.5 text-xs font-medium text-zinc-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-zinc-400 no-underline hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      <span>View details</span>
+                      <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                    </Link>
+                  </div>
 
                   <button
                     onClick={() => toggleFavorite(r.id, r.isFavorite)}
