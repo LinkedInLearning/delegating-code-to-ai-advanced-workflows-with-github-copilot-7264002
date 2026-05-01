@@ -4,11 +4,12 @@ import { logToFile, newRequestId } from "@/lib/logger";
 import { normalizeUrl } from "@/lib/normalizeUrl";
 import { optionalString } from "@/lib/validators";
 
-type Params = { params: { id: string } };
+type Params = { params: Promise<{ id: string }> };
 
 export async function GET(_req: Request, { params }: Params) {
+  const { id } = await params;
   const r = await prisma.resource.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { tags: { include: { tag: true } } },
   });
   if (!r) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -30,6 +31,7 @@ export async function GET(_req: Request, { params }: Params) {
 
 export async function PATCH(req: Request, { params }: Params) {
   const requestId = newRequestId();
+  const { id } = await params;
   const body = await req.json().catch(() => ({}));
 
   try {
@@ -52,7 +54,7 @@ export async function PATCH(req: Request, { params }: Params) {
       });
 
       const dup = await prisma.resource.findUnique({ where: { urlNormalized } });
-      if (dup && dup.id !== params.id) {
+      if (dup && dup.id !== id) {
         return NextResponse.json({ error: "That URL already exists in your library." }, { status: 409 });
       }
 
@@ -61,7 +63,7 @@ export async function PATCH(req: Request, { params }: Params) {
     }
 
     const updated = await prisma.resource.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         ...updates,
         activities: { create: { type: "updated", message: `Updated: ${updates.title ?? "resource"}` } },
@@ -96,16 +98,16 @@ export async function PATCH(req: Request, { params }: Params) {
 export async function DELETE(_req: Request, { params }: Params) {
   const requestId = newRequestId();
   try {
-    const existing = await prisma.resource.findUnique({ where: { id: params.id } });
+    const existing = await prisma.resource.findUnique({ where: { id: (await params).id } });
     if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     await prisma.activity.create({
       data: { type: "deleted", message: `Deleted: ${existing.title}`, resourceId: existing.id },
     });
 
-    await prisma.resource.delete({ where: { id: params.id } });
+    await prisma.resource.delete({ where: { id: existing.id } });
 
-    logToFile({ requestId, route: "DELETE /api/resources/:id", event: "deleted", id: params.id });
+    logToFile({ requestId, route: "DELETE /api/resources/:id", event: "deleted", id: existing.id });
 
     return NextResponse.json({ ok: true });
   } catch (e: any) {

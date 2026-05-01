@@ -1,10 +1,11 @@
 import { Shell } from "@/components/Shell";
 import { ResourceDetail } from "@/components/ResourceDetail";
 
-export default function ResourceDetailPage({ params }: { params: { id: string } }) {
+export default async function ResourceDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   return (
     <Shell>
-      <ResourceDetail id={params.id} />
+      <ResourceDetail id={id} />
     </Shell>
   );
 }

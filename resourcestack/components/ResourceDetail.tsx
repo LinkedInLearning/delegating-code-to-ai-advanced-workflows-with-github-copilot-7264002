@@ -72,7 +72,7 @@ export function ResourceDetail({ id }: { id: string }) {
 
   async function addTag() {
     if (!resource) return;
-    const name = tagInput.trim();
+    const name = tagInput.trim().toLowerCase();
     if (!name) return;
 
     setError(null);
