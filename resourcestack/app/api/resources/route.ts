@@ -21,7 +21,7 @@ export async function GET(req: Request) {
     ];
   }
   if (tag.trim()) {
-    where.tags = { some: { tag: { name: tag.toLowerCase() } } };
+    where.tags = { some: { tag: { name: tag } } };
   }
 
   const resources = await prisma.resource.findMany({

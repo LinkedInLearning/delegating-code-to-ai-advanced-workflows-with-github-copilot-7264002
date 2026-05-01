@@ -5,19 +5,142 @@ This is the repository for the LinkedIn Learning course `Delegating Code to AI: 
 
 ## Course Description
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+Learn how to delegate complex coding tasks to GitHub Copilot using advanced agent workflows and customization techniques. This course teaches you how to effectively guide AI assistants through multi-step tasks, set boundaries with custom instructions, and leverage agent modes for better code generation results.
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+## This Branch — Chapter 4
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+This branch is the starting point for **Chapter 4: Log-Driven Debugging with a Custom Agent**.
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+The ResourceStack app has a broken tag filter. Your exercise is to use a custom **log-debugger** Copilot agent to diagnose and fix the issue using evidence from logs — not guesswork.
+
+**What's broken (for you to fix):**
+- Tag filtering is case-sensitive and does not work correctly
+- No visible active filter badge when a tag is selected
+
+**Your task:**
+- Use the `log-debugger` agent defined in `chapter4/PROMPTS.md`
+- Reproduce the issue and gather log evidence before suggesting a fix
+- Add structured `[INFO]` and `[ERROR]` logs to identify the root cause
+- Fix the issue only after identifying it through evidence
+- Include verification steps before accepting the fix
+
+## Prerequisites
+
+To follow along with this course, you should have:
+- Basic understanding of JavaScript/TypeScript
+- Familiarity with GitHub Copilot
+- **Node.js 18+** installed
+- Git for version control
+- A code editor (VS Code recommended with GitHub Copilot extension)
+
+## Quick Start
+
+### Running the ResourceStack Application
+
+**⚠️ IMPORTANT**: You must create a `.env` file before running setup!
+
+1. Navigate to the resourcestack directory:
+   ```bash
+   cd resourcestack
+   ```
+
+2. **Create the environment file** (REQUIRED):
+   ```bash
+   cp .env.example .env
+   ```
+
+   This creates a `.env` file with `DATABASE_URL="file:./dev.db"` which Prisma needs to connect to the SQLite database.
+
+3. Run the setup script (installs dependencies, generates Prisma client, runs migrations, seeds database):
+   ```bash
+   npm run gp:setup
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run gp:dev
+   ```
+
+5. Open your browser to [http://localhost:3000](http://localhost:3000)
+
+### Additional Commands
+
+- **Run tests**: `npm run gp:test`
+- **Lint code**: `npm run gp:lint`
+- **View logs**: Check `./logs/app.log`
+
+## Switching Branches
+
+To switch to another chapter:
+
+```bash
+git fetch origin
+git switch chapter1
+```
+
+### Handling Local Changes
+
+**Option 1 - Commit your changes:**
+```bash
+git add .
+git commit -m "Your commit message"
+git switch <branch-name>
+```
+
+**Option 2 - Stash your changes:**
+```bash
+git stash
+git switch <branch-name>
+git stash pop
+```
+
+## About ResourceStack
+
+ResourceStack is a full-stack web application built with:
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Prisma** - Database ORM with SQLite
+- **Tailwind CSS** - Styling
+- **Vitest** - Testing framework
+
+## Troubleshooting
+
+**Missing DATABASE_URL error**: Make sure you created the `.env` file:
+```bash
+cd resourcestack
+cp .env.example .env
+```
+
+**Database issues**: Try resetting the database:
+```bash
+cd resourcestack
+npx prisma migrate reset --force
+```
+
+**Dependency issues**: Clear node_modules and reinstall:
+```bash
+rm -rf node_modules package-lock.json
+npm install --legacy-peer-deps
+```
+
+**Port already in use**:
+```bash
+npm run gp:dev -- -p 3001
+```
+
+## Instructor
+
+Instructor name
+
+Instructor description
+
+Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/).
+
+
+[0]: # (Replace these placeholder URLs with actual course URLs)
+
+[lil-course-url]: https://www.linkedin.com/learning/
+[lil-thumbnail-url]: https://media.licdn.com/dms/image/v2/D4E0DAQG0eDHsyOSqTA/learning-public-crop_675_1200/B4EZVdqqdwHUAY-/0/1741033220778?e=2147483647&v=beta&t=FxUDo6FA8W8CiFROwqfZKL_mzQhYx9loYLfjN-LNjgA
 
 To resolve this issue:
 	
