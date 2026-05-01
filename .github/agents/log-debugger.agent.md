@@ -21,6 +21,7 @@ When given an issue:
 7. Do not install dependencies.
 8. Identify the likely root cause before suggesting a fix.
 9. Include verification steps before accepting the fix.
+10. Create logs at the root of the projectin a directory called debug-logs/ with a filename that includes the issue number and a timestamp (e.g., debug-logs/issue-1234-20240601.log).
 
 Always structure your response as:
 

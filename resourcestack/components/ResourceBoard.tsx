@@ -21,6 +21,7 @@ export function ResourceBoard() {
   const [items, setItems] = useState<Resource[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState("");
+  const [search, setSearch] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ url: "", title: "", notes: "", tags: "" });
@@ -28,12 +29,13 @@ export function ResourceBoard() {
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [metadataFailed, setMetadataFailed] = useState(false);
 
-  async function load(overrideTag?: string) {
+  async function load(overrideTag?: string, overrideSearch?: string) {
     setLoading(true);
     setError(null);
     try {
       const qTag = overrideTag !== undefined ? overrideTag : tag;
-      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=&tag=${encodeURIComponent(qTag)}`);
+      const qSearch = overrideSearch !== undefined ? overrideSearch : search;
+      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=${encodeURIComponent(qSearch)}&tag=${encodeURIComponent(qTag)}`);
       setItems(data.resources);
       const t = await apiFetch<{ tags: string[] }>(`/api/tags`);
       setTags(t.tags);
@@ -98,8 +100,9 @@ export function ResourceBoard() {
       
       setForm({ url: "", title: "", notes: "", tags: "" });
       setTag("");
+      setSearch("");
       setShowFavoritesOnly(false);
-      await load("");
+      await load("", "");
     } catch (e: any) {
       setError(e?.message ?? "Create failed");
     }
@@ -340,6 +343,17 @@ export function ResourceBoard() {
           </div>
           
           <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => {
+                const v = e.target.value;
+                setSearch(v);
+                void load(undefined, v);
+              }}
+              placeholder="Search by title..."
+              className="input-focus w-full rounded-2xl bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200 transition-all focus:bg-white focus:ring-2 focus:ring-blue-500/40 dark:bg-zinc-900/60 dark:ring-zinc-700 dark:focus:bg-zinc-900 dark:focus:ring-blue-500/40 sm:w-48"
+            />
             <div className="relative">
               <Tag className="pointer-events-none absolute left-3.5 top-2.5 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
               <select
@@ -391,7 +405,19 @@ export function ResourceBoard() {
           </div>
         )}
 
-        <div className="mt-6 grid gap-3.5">
+        {/* Total Count Display */}
+        <div className="mt-6 rounded-2xl bg-gradient-to-r from-blue-50 to-violet-50 px-4 py-3 ring-1 ring-blue-100/50 dark:from-blue-950/30 dark:to-violet-950/30 dark:ring-blue-900/30">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+              Showing {filtered.length} {filtered.length === 1 ? "resource" : "resources"}
+            </span>
+            <div className="rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-xs font-bold text-white shadow-sm">
+              {filtered.length}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3.5">
           {loading && items.length === 0 ? (
             <div className="animate-fade-in rounded-3xl bg-zinc-50/70 p-12 text-center ring-1 ring-zinc-200/50 dark:bg-zinc-900/30 dark:ring-zinc-700/50">
               <div className="shimmer mb-3 inline-block h-8 w-8 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-500"></div>
@@ -500,8 +526,9 @@ export function ResourceBoard() {
               <button
                 onClick={() => {
                   setTag("");
+                  setSearch("");
                   setShowFavoritesOnly(false);
-                  void load("");
+                  void load("", "");
                 }}
                 className="btn-press mt-4 inline-flex items-center gap-2 rounded-2xl bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
               >
