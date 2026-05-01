@@ -21,6 +21,7 @@ export function ResourceBoard() {
   const [items, setItems] = useState<Resource[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState("");
+  const [search, setSearch] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ url: "", title: "", notes: "", tags: "" });
@@ -28,12 +29,13 @@ export function ResourceBoard() {
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [metadataFailed, setMetadataFailed] = useState(false);
 
-  async function load(overrideTag?: string) {
+  async function load(overrideTag?: string, overrideSearch?: string) {
     setLoading(true);
     setError(null);
     try {
       const qTag = overrideTag !== undefined ? overrideTag : tag;
-      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=&tag=${encodeURIComponent(qTag)}`);
+      const qSearch = overrideSearch !== undefined ? overrideSearch : search;
+      const data = await apiFetch<{ resources: Resource[] }>(`/api/resources?search=${encodeURIComponent(qSearch)}&tag=${encodeURIComponent(qTag)}`);
       setItems(data.resources);
       const t = await apiFetch<{ tags: string[] }>(`/api/tags`);
       setTags(t.tags);
@@ -340,6 +342,17 @@ export function ResourceBoard() {
           </div>
           
           <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => {
+                const v = e.target.value;
+                setSearch(v);
+                void load(undefined, v);
+              }}
+              placeholder="Search by title…"
+              className="input-focus w-full rounded-2xl bg-zinc-50 px-4 py-2.5 text-sm ring-1 ring-zinc-200 transition-all placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:ring-blue-500/40 dark:bg-zinc-900/60 dark:ring-zinc-700 dark:placeholder:text-zinc-500 dark:focus:bg-zinc-900 dark:focus:ring-blue-500/40 sm:w-48"
+            />
             <div className="relative">
               <Tag className="pointer-events-none absolute left-3.5 top-2.5 h-4 w-4 text-zinc-400 dark:text-zinc-500" />
               <select

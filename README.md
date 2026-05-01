@@ -3,40 +3,51 @@ This is the repository for the LinkedIn Learning course `Delegating Code to AI: 
 
 ![lil-thumbnail-url]
 
-## Course Description
+## This Branch — Chapter 5
 
-_See the readme file in the main branch for updated instructions and information._
-## Instructions
-This repository has branches for each of the videos in the course. You can use the branch pop up menu in github to switch to a specific branch and take a look at the course at that stage, or you can add `/tree/BRANCH_NAME` to the URL to go to the branch you want to access.
+This branch is the starting point for **Chapter 5: Logging, Security, and Team Standards**.
 
-## Branches
-The branches are structured to correspond to the videos in the course. The naming convention is `CHAPTER#_MOVIE#`. As an example, the branch named `02_03` corresponds to the second chapter and the third video in that chapter. 
-Some branches will have a beginning and an end state. These are marked with the letters `b` for "beginning" and `e` for "end". The `b` branch contains the code as it is at the beginning of the movie. The `e` branch contains the code as it is at the end of the movie. The `main` branch holds the final state of the code when in the course.
+The ResourceStack app is fully functional on this branch — tag filtering, search by title, and favorites all work. Your exercise is to use GitHub Copilot Agent Mode to add structured logging to the API routes, enforce security boundaries, and evaluate tasks against team delegation standards.
 
-When switching from one exercise files branch to the next after making changes to the files, you may get a message like this:
+**What's working on this branch:**
+- Tag filtering (case-insensitive)
+- Search by title
+- Active filter badge
+- Favorites tab
 
-    error: Your local changes to the following files would be overwritten by checkout:        [files]
-    Please commit your changes or stash them before you switch branches.
-    Aborting
+**Your task:**
+- Use the prompts in `chapter5/PROMPTS.md` as your guide
+- Add structured `[INFO]` and `[ERROR]` log entries to API routes
+- Apply the security boundary rules: do not log tokens, passwords, or full request bodies
+- Use the `team-standards-reviewer` agent to evaluate the incomplete logging task in prompt 5-3
 
-To resolve this issue:
-	
-    Add changes to git using this command: git add .
-	Commit changes using this command: git commit -m "some message"
+---
 
-## Installing
-1. To use these exercise files, you must have the following installed:
-	- [list of requirements for course]
-2. Clone this repository into your local machine using the terminal (Mac), CMD (Windows), or a GUI tool like SourceTree.
-3. [Course-specific instructions]
+## Quick Start
+
+```bash
+cd resourcestack
+cp .env.example .env
+npm run gp:setup
+npm run gp:dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000).
+
+## Switching Branches
+
+```bash
+git switch <branch-name>
+cd resourcestack && npm run gp:setup
+```
+
+## Troubleshooting
+
+- **`DATABASE_URL` error** — Make sure you've copied `.env.example` to `.env` before running setup.
+- **Prisma errors after switching branches** — Run `npm run gp:setup` again to re-migrate and re-seed.
+- **Port already in use** — Kill the existing process or run on a different port with `PORT=3001 npm run gp:dev`.
 
 ## Instructor
-
-Instructor name
-
-Instructor description
-
-                            
 
 Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/).
 
