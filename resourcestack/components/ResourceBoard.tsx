@@ -405,19 +405,7 @@ export function ResourceBoard() {
           </div>
         )}
 
-        {/* Total Count Display */}
-        <div className="mt-6 rounded-2xl bg-gradient-to-r from-blue-50 to-violet-50 px-4 py-3 ring-1 ring-blue-100/50 dark:from-blue-950/30 dark:to-violet-950/30 dark:ring-blue-900/30">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-              Showing {filtered.length} {filtered.length === 1 ? "resource" : "resources"}
-            </span>
-            <div className="rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-xs font-bold text-white shadow-sm">
-              {filtered.length}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-4 grid gap-3.5">
+        <div className="mt-6 grid gap-3.5">
           {loading && items.length === 0 ? (
             <div className="animate-fade-in rounded-3xl bg-zinc-50/70 p-12 text-center ring-1 ring-zinc-200/50 dark:bg-zinc-900/30 dark:ring-zinc-700/50">
               <div className="shimmer mb-3 inline-block h-8 w-8 animate-spin rounded-full border-2 border-zinc-300 border-t-blue-500"></div>
