@@ -93,27 +93,43 @@ The branches are structured to correspond to the chapters in the course. Each br
 - Custom instruction examples
 - Prompts for practice
 
-To switch branches:
-```bash
-git checkout chapter1
-```
+### Switching to Chapter Branches
 
-Or use the branch menu in GitHub to browse different chapters.
+1. **First time setup** - Fetch all available branches:
+   ```bash
+   git fetch origin
+   ```
+
+2. **Switch to a chapter branch**:
+   ```bash
+   git switch chapter1
+   ```
+   
+   Or for other chapters:
+   ```bash
+   git switch chapter2
+   git switch chapter3
+   ```
+
+Git will automatically create a local tracking branch from the remote branch.
+
+Alternatively, you can browse different chapters using the branch menu in GitHub.
 
 ### Handling Local Changes
 
 If you've made changes and want to switch branches, you may see an error. To resolve:
 
+**Option 1 - Commit your changes:**
 ```bash
 git add .
 git commit -m "Your commit message"
-git checkout <branch-name>
+git switch <branch-name>
 ```
 
-Alternatively, stash your changes:
+**Option 2 - Stash your changes:**
 ```bash
 git stash
-git checkout <branch-name>
+git switch <branch-name>
 git stash pop  # To restore your changes later
 ```
 
