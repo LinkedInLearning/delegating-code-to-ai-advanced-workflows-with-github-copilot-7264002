@@ -66,25 +66,40 @@ To follow along with this course, you should have:
 │   ├── prisma/            # Database schema and migrations
 │   ├── tests/             # Test files
 │   └── scripts/           # Helper scripts
+├── .github/
+│   ├── agents/            # Custom Copilot agent definitions
+│   ├── workflows/         # CI workflows
+│   └── copilot-instructions.md  # Persistent agent instructions
 ├── chapter1/              # Chapter 1 exercises and prompts
-└── chapter2/              # Chapter 2 exercises and prompts
+├── chapter2/              # Chapter 2 exercises and prompts
+├── chapter3/              # Chapter 3 exercises and prompts
+├── chapter4/              # Chapter 4 exercises and prompts
+├── chapter5/              # Chapter 5 exercises and prompts
+└── chapter6/              # Chapter 6 exercises and prompts
 ```
 
 ## Course Chapters
 
-Each branch in this repository corresponds to a chapter in the course:
+Each branch in this repository corresponds to a chapter in the course. Switch to the branch to get the starting state for that chapter's exercises.
 
-- **Chapter 1**: Agent Customization Fundamentals
-  - Setting up custom instructions
-  - Managing dependencies with guardrails
-  - Defining project scope
-  - Working with agent stop conditions
+| Branch | Chapter | Topic |
+|--------|---------|-------|
+| `chapter1` | Chapter 1 | Agent Customization Fundamentals — custom instructions, guardrails, scope, stop conditions |
+| `chapter2` | Chapter 2 | Advanced Task Delegation — refining prompts, scope checkpoints, verification |
+| `chapter3` | Chapter 3 | Golden Path Scripting — enforcing `gp:` scripts, environment rules |
+| `chapter4` | Chapter 4 | Log-Driven Debugging — using the `log-debugger` agent to diagnose issues with evidence |
+| `chapter5` | Chapter 5 | Logging, Security & Team Standards — structured logging, safe boundaries, standards review |
+| `chapter6` | Chapter 6 | Delegation Risk & Failure Review — evaluating tasks with `delegation-risk-reviewer` and `delegation-failure-reviewer` agents |
+| `main` | Final state | Fully working app with all features |
 
-- **Chapter 2**: Advanced Task Delegation
-  - Improving task instructions
-  - Implementing scope checkpoints
-  - Verification strategies
-  - Multi-step workflows
+## Custom Agents
+
+This repository includes custom Copilot agent definitions in `.github/agents/`:
+
+- **`log-debugger`** — Diagnoses issues using logs and evidence before suggesting fixes
+- **`team-standards-reviewer`** — Reviews tasks against team delegation standards before work begins
+- **`delegation-risk-reviewer`** — Evaluates whether a task should be delegated to AI or remain human-led
+- **`delegation-failure-reviewer`** — Analyzes failed AI delegation outcomes and recommends corrections
 
 ## Working with Branches
 
@@ -103,12 +118,7 @@ The branches are structured to correspond to the chapters in the course. Each br
 2. **Switch to a chapter branch**:
    ```bash
    git switch chapter1
-   ```
-   
-   Or for other chapters:
-   ```bash
-   git switch chapter2
-   git switch chapter3
+   # or chapter2, chapter3, chapter4, chapter5, chapter6
    ```
 
 Git will automatically create a local tracking branch from the remote branch.
