@@ -173,7 +173,9 @@ npm install --legacy-peer-deps
 ```bash
 npm run gp:dev -- -p 3001
 ```
+## Instructor
 
+Tiffany Teasley - Data Sistah | Data Scientist & AI Engineer
 
 [0]: # (Replace these placeholder URLs with actual course URLs)
 
