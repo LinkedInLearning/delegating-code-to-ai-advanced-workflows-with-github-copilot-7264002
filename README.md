@@ -177,6 +177,6 @@ npm run gp:dev -- -p 3001
 
 [0]: # (Replace these placeholder URLs with actual course URLs)
 
-[lil-course-url]: https://www.linkedin.com/learning/
-[lil-thumbnail-url]: https://media.licdn.com/dms/image/v2/D4E0DAQG0eDHsyOSqTA/learning-public-crop_675_1200/B4EZVdqqdwHUAY-/0/1741033220778?e=2147483647&v=beta&t=FxUDo6FA8W8CiFROwqfZKL_mzQhYx9loYLfjN-LNjgA
+[lil-course-url]: https://www.linkedin.com/learning/delegating-tasks-to-github-copilot-building-faster-smarter-engineering-practices/your-guide-to-delegating-real-tasks-to-github-copilot?u=104
+[lil-thumbnail-url]: https://media.licdn.com/dms/image/v2/D560DAQF9cwRvZnob3w/learning-public-crop_675_1200/B56Z3_RQlIIsAY-/0/1778104208024?e=2147483647&v=beta&t=0nskL4cyxTkfGfyNRBQBMG1P4LoyemugzM086sRsd1o
 
